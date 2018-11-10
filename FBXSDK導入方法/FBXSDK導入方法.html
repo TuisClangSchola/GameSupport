@@ -1,0 +1,130 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			FBXSDKの導入方法
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
+		<div align="center"><font size="7">FBXSDK導入方法</font></div>
+	
+		<h2>
+			対象
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;エンジンではなくライブラリだけでFBXを使う人用、ほぼ自分の確認のため<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			構成
+			<hr color="#99baff">
+		</h2>
+		<p>
+			<ol>
+				<a href="#R1">No.1 FBX SDKのダウンロード<br></a>
+				<a href="#R2">No.2 環境設定<br></a>
+				<a href="#R3">No.3 仮実行<br></a>
+			</ol><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			本編
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;今回はFBX SDKを扱うための導入について説明します。ちなみに画像を多く使って説明します。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R1">
+				No.1 FBX SDKのダウンロード
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;以下のURLから<font color="red">FBX SDK</font>をダウンロードしてください。<br>
+			<br>
+			&emsp;「FBX SDK」と検索してください。<br>
+			<br>
+			&emsp;以下は画像で説明します。<br>
+			<br>
+			<img src="1.jpg" alt="検索"><br>
+			<br>
+			<img src="2.jpg" alt="ダウンロード"><br>
+			<br>
+			<img src="3.jpg" alt="exeをダウンロード"><br>
+			<br><br><br>
+			&emsp;ダウンロード済みなのでここからは端折りますが次へなどあればそのまま進んでください。<br>
+			<br>
+			<br>
+			ダウンロードができているか以下の階層にファイルがあるか確認してください。<br>
+			<br>
+			<img src="4.jpg" alt="ファイル階層確認"><br>
+			<br>
+			<br>
+			&emsp;これでダウンロードは終了です。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R2">
+				No.2 環境設定
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;Visual Studioを起動してプロジェクトを作成してください。ただの確認のためなのでコンソールアプリケーションで作成してください。<br>
+			以下画像で。<br>
+			<br>
+			<img src="5.jpg" alt="適当"><br>
+			<br>
+			<img src="6.jpg" alt="適当"><br>
+			<br>
+			<img src="7.jpg" alt="適当"><br>
+			<br>
+			<img src="8.jpg" alt="適当"><br>
+			<br>
+			<img src="9.jpg" alt="適当"><br>
+			<br>
+			<img src="5.jpg" alt="適当"><br>
+			<br>
+			<br>
+			&emsp;これでダウンロードは終了です。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R3">
+				No.3 プロジェクトの設定
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;それで設定がうまくいってるのかを確認するために以下のコードをひとまずコピペでテストしてください。<br>
+			<br><br><br><br>
+		</p>
+		<div style="background:#EFEFEF;width:1200px;border:1px solid #CC0000; height:200px;">
+		<pre>
+#include "stdafx.h"
+#include "fbxsdk.h"
+int main()
+{
+	FbxManager* manager = FbxManager::Create();
+	manager->Destroy();	//これを呼んでおけばFBX SDKのメモリ解放忘れはないはずです。
+	return 0;
+}
+		</pre>
+		</div>
+		<p>
+			<br>
+			&emsp;エラーなく実行できていれば設定はちゃんとできています。エラーが出た場合は何かしらでミスっています。<br>
+			<br>
+			<br>
+			&emsp;以上で今回の説明は以上となります。<br>
+			<br><br><br><br>
+		</p>
+	</BODY>
+</HTML>

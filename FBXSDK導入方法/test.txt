@@ -1,0 +1,8 @@
+#include<fbxsdk.h>
+
+int main() {
+  fbxsdk::FbxManager* manager = fbxsdk::FbxManager::Create();
+  manager->Destroy();
+
+  return 0;
+}
