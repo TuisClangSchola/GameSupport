@@ -1,0 +1,309 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Dxライブラリの導入方法
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
+		<div align="center"><font size="7">Dxライブラリの導入方法</font></div>
+	
+		<h2>
+			対象
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;C言語を一通り学び終えて、なにかゲーム作りたいーって人が対象となります。<br>
+			Visual Studio2015及び2017を併用しての説明となります。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			目的
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;ゲームを作る上で初心者でも簡単に扱えるライブラリの導入方法を説明します。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			構成
+			<hr color="#99baff">
+		</h2>
+		<p>
+			<ol>
+				<a href="#R1">No.1 ダウンロード<br></a>
+				<a href="#R2">No.2 プロジェクトの作成１<br></a>
+				<a href="#R3">No.3 プロジェクトの作成２<br></a>
+				<a href="#R4">No.4 ソリューションの作成<br></a>
+				<a href="#R5">No.5 プロパティ設定１<br></a>
+				<a href="#R6">No.6 プロパティ設定２<br></a>
+				<a href="#R7">No.7 プロパティ設定３<br></a>
+				<a href="#R8">No.8 プロパティ設定４<br></a>
+				<a href="#R9">No.9 プロパティ設定５<br></a>
+				<a href="#R10">No.10 テスト実行<br></a>
+			</ol><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			本編
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;今回はDlLibの導入について説明します。ちなみに画像を多めに使って説明します。<br>
+			<br><br><br><br><br>
+		</p>
+		<h3>
+			<a name="R1">
+				No.1 ダウンロード
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;以下のURLから<font color="red">DXライブラリをダウンロード</font>してください。<br>
+			<br>
+			&emsp;<a href="http://dxlib.o.oo7.jp/">Dxライブラリ置き場　HOME</a><br>
+			<br>
+			&emsp;というかそのサイトから導入方法の一通りは説明されているのでそこを見ても構いませんし、ここで設定を行っても構いません。
+			ダウンロードが終わりましたらダウンロード先のフォルダを開いてください。<br>
+			<br>
+			&emsp;そこにある<font color="green">DxLib</font>を<font color="red">Cドライブ</font>のとこに移動させてください。
+			それを済ませたらパソコンへの導入は終了です。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R2">
+				No.2 プロジェクトの作成１
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;では、Visual Studioへの導入方法を説明します。Visual Studioの扱いはC言語で少なからず知っていると思うので多少飛ばす部分があるかもしれませんがご了承ください。<br>
+			<br>
+			&emsp;まず、Visual Studioを起動して新しいプロジェクトを作成する手前までいってください。そうすると以下のようなウィンドウが出ると思います。<br>
+			<img src="1.jpg" alt="新しいプロジェクト"><br>
+			上のように<br>
+			<font color="green">【テンプレート】→【Visual C++】→【Windows】→【Win32】→【Win32プロジェクト】</font><br>
+			を選択してください。<br>
+			<br>
+			&emsp;名前及び場所は任意です。そしたら【OK】を押してください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R3">
+				No.3 プロジェクトの作成２
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;以下の表示が出ると思います。<br>
+			<img src="2.jpg" alt="アプリケーション設定"><br>
+			上の画像のようにとりあえずなっているか確認してください。<br>
+			<br>
+			&emsp;これは私のミスですが<br>
+			<font color="red">【Security Development Lifecycle(SDL)チェック】<br>
+			からはチェックを外してください。</font><br>
+			ちなみにVisual Studio 2017は元よりそのような項目はないので気にしないでください。<br>
+			<br>
+			&emsp;そしたら【完了】を押してください。<br>
+			<br><br><br><br><br>
+		</p>	
+	
+		<h3>
+			<a name="R4">
+				No.4 ソリューションの作成
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;なにもないプロジェクトが生成されるのでいつもの通り<font color="red">【main.cpp】</font>を作ってください。特に説明はありません。<br>
+			<img src="3.jpg" alt="アプリケーション設定"><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R5">
+				No.5 プロパティ設定１
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;ここから本格的に導入の説明をします。これを間違えるとうまくいかないので目をかっぽじって行ってください。<br>
+			<br>
+			<br>
+			&emsp;では、プロパティを開いて以下を表示させてください。<br>
+			<img src="4.jpg" alt="プロパティ"><br>
+			<br>
+			では、<font color="green">左上の【構成(C)】</font>を<font color="red">【すべての構成】</font>にして<br>
+			<font color="green">【構成プロパティ】</font>を<font color="red">【全般】</font>で表示させてください。<br>
+			<br>
+			<br>
+			&emsp;そしたら右に表示されてる<br>
+			<font color="green">【文字セット】</font>を<font color="red">【マルチバイト文字セットを使用する】</font>に変更してください。<br>
+			<br>
+			&emsp;まだ【OK】を押して閉じないでください。ほかは変更せずに<font color="green">【適用】</font>を押してください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R6">
+				No.6 プロパティ設定２
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;次に【構成(C)】はそのままに<br>
+			<font color="red">【構成プロパティ】→【C/C++】→【全般】</font><br>
+			を表示してください。<br>	
+			<br>
+			&emsp;以下のような感じに表示されると思います。<br>
+			<img src="5.jpg" alt="c/c++プロパティ"><br>
+			<br>
+			では【追加のインクルードディレクトリ】を変更します。私が最初のように話した通り、CドライブにDxLibを移した人は以下の記述をコピーして貼り付けてください。<br>
+			<font color="red">【c:\DxLib_VC\プロジェクトに追加すべきファイル_VC用】</font><br>
+			<br>
+			&emsp;そうでない方は自身のパソコンに入っている【DxLib_VC】の位置を入れてください。それが済んだら<font color="green">【適用】</font>を押してください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R7">
+				No.7 プロパティ設定３
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			次に【構成(C)】をそのままに<br>
+			<font color="red">【構成プロパティ】→【リンカー】→【全般】</font><br>
+			を表示させてください。<br>
+			<br>
+			&emsp;以下のような感じに表示されたと思います。<br>
+			<img src="6.jpg" alt="リンカープロパティ"><br>
+			<br>
+			では<br>
+			<font color="green">【追加のライブラリディレクトリ】</font><br>
+			を変更します。<br>
+			<br>
+			&emsp;先ほどと同じように<br>
+			<font color="red">【c:\DxLib_VC\プロジェクトに追加すべきファイル_VC用】</font><br>
+			をコピーして貼り付けてください。<br>
+			全く同じもので不安に思うかもしれませんが大丈夫です。違う場所に【DxLib_VC】がある人は先ほどと同じように指定してください。<br>
+			<br>
+			&emsp;それが済んだら<font color="green">【適用】</font>を押してください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R8">
+				No.8 プロパティ設定４
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;今回から【構成(C)】を変更します。<br>
+			<br>
+			<font color="green">【構成(C)】</font>を<br>
+			<font color="red">【すべての構成】→【Debug】</font><br>
+			に変更してください。<br>
+			<br>
+			&emsp;そのあとに<br>
+			<font color="red">【構成プロパティ】→【C/C++】→【コード生成】</font><br>
+			を表示させてください。<br>
+			<br>
+			&emsp;以下のように表示されると思います。<br>
+			<img src="8.jpg" alt="構成Debug"><br>
+			<br>
+			では<br>
+			<font color="red">【ランタイムライブラリ】</font><br>
+			を変更します。<br>
+			<br>
+			&emsp;やり方は簡単で<br>
+			<font color="red">【マルチスレッドデバッグ(/MTd)】</font><br>
+			に変更してください。<br>
+			<br>
+			&emsp;それが済んだら<font color="green">【適用】</font>を押してください。<br>
+			<br><br><br><br><br>
+			</p>
+
+		<h3>
+			<a name="R9">
+				No.9 プロパティ設定５
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			<font color="green">【構成(C)】</font>を<br>
+			<font color="red">【すべての構成】→【Release】</font><br>
+			に変更してください。<br>
+			<br>
+			&emsp;表示はそのままで構いません。以下のように表示されると思います。<br>
+			<img src="7.jpg" alt="構成Release"><br>
+			<br>
+			では<br>
+			<font color="green">【ランタイムライブラリ】</font><br>
+			を変更します。<br>
+			<br>
+			やり方は先ほどと同じように簡単で<br>
+			<font color="red">【マルチスレッド(/MT)】</font><br>
+			に変更してください。<br>
+			<br>
+			&emsp;それが済んだら【適用】を押してください。<br>
+			<br>
+			&emsp;加えて<font color="green">【OK】</font>を押してください。<br>
+			設定は以上となります。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R10">
+				No.10 テスト実行
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;試しに以下のソースコードをコピペして実行してください。<br>
+			<br>
+			
+			<pre>
+<code>
+<div style="background:#EFEFEF;width:850px;border:1px solid #CC0000; height:700px;">
+<ol>
+<li>#include &quot;DxLib.h&quot;</li>
+<li></li>
+<li>// プログラムは WinMain から始まります</li>
+<li>int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )</li>
+<li>{</li>
+<li>	if( DxLib_Init() == -1 )		// ＤＸライブラリ初期化処理</li>
+<li>	{</li>
+<li>		return -1 ;			// エラーが起きたら直ちに終了</li>
+<li>	}</li>
+<li></li>
+<li>	DrawPixel( 320 , 240 , GetColor( 255,255,255 ) ) ;	// 点を打つ</li>
+<li></li>
+<li>	WaitKey() ;				// キー入力待ち</li>
+<li></li>
+<li>	DxLib_End() ;				// ＤＸライブラリ使用の終了処理</li>
+<li></li>
+<li>	return 0 ;				// ソフトの終了 </li>
+<li>}</li>
+</ol>
+</div>
+</code>
+			</pre>
+			
+			<br>
+			&emsp;エラーなく実行できていれば設定はちゃんとできています。エラーが出た場合は何かしらでミスっています。<br>
+			<br>
+			<br>
+			&emsp;以上で今回の説明は以上となります。<br>
+			ちなみに今回のソースコードに【WaitKey()】がありますが、私たちの部活ではテストやデバッグ以外では書かないようお願いします。<br>
+			<br><br><br><br><br>
+
+			DX Library Copyright (C) 2001-2014 Takumi Yamada.
+
+		</p>
+	</BODY>
+</HTML>

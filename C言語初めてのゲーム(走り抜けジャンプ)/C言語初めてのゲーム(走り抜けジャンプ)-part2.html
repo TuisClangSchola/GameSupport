@@ -1,0 +1,510 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			C言語初めてのゲーム(走る抜けジャンプ)-part2
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
+		<div align="center"><font size="7">C言語初めてのゲーム(走り抜けジャンプ)-part2</font></div>
+	
+		<h2>
+			対象
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;前回の<font color="red">C言語初めてのゲーム(走る抜けジャンプ)</font>を終えている人が対象となっています。終えてない人は以下のリンクから飛んでやってください。<br>
+			<a href="C言語初めてのゲーム(走り抜けジャンプ).html">C言語初めてのゲーム(走り抜けジャンプ)</a><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			構成
+			<hr color="#99baff">
+		</h2>
+		<p>
+			<ol>
+				<a href="#R4">No.4 エンディング<br></a>
+				&emsp;<a href="#R4-1">No.4-1 準備<br></a>
+				&emsp;<a href="#R4-2">No.4-2 画像と操作と切り替え<br></a>
+			</ol><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			本編
+			<hr color="#99baff">
+		</h2>
+		<p>
+		</p>
+		<h3>
+			<a name="R4">
+				No.4 エンディング
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;ゲームをプレイした後のエンディングです。<br>
+			<br>
+			今回はクリアとゲームオーバーを分けないでエンディングとするので至極簡単なものになります。<br>
+			<br><br><br><br>
+		</p>
+
+		<h4>
+			<a name="R4-1">
+				No.4-1 準備
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;エンディングもタイトルと同じように書けばいいと思いますがそうはいきませんでした。<br>
+			<br>
+			タイトルとエンディングが同時に処理されていると大変なことになりますよね。また、同様にゲーム中にタイトルとかエンディングが実行されていると困りますよね。<br>
+			なので、シーンを管理する変数を用意します。今回はシーンに関しては簡単に済むようにします。あと【int型】を使っていますが、見やすさや分かりやすさを重視して【enum型】を使うことを推奨します。分かる人はそこだけ書き換えてやってみてください。<br>
+			<pre><font color="blue">
+int scene;		// 現在のシーン
+			</font></pre>
+			
+			&emsp;それが済めばあとはタイトル同様です。エンディングに必要なものはタイトルに比べると少なく済みます。<br>
+			あと今回は準備のみなので描画はしません。描画は次にまとめます。<br>
+			<br>
+			&emsp;タイトルと同じように【描画】【操作】と分けて扱います。関数名が違うだけで必要なものと役割は変わらないので説明は端折ります。<br>
+			<br>
+			<pre><font color="blue">
+void End_Draw(void);		// エンディングの描画の中身を管理
+void End_Process(void);		// エンディングの操作の中身を管理
+
+void End_Update(void);		// エンディングの描画と操作の実体を管理
+
+void Initialize_End(void);	// エンディングの要素の初期化
+
+void Delete_End(void);		// エンディングの要素の削除
+			</font></pre>
+			<br>
+			それらを組み込んであげたソースコードが以下のようになります。<br>
+			<br>
+			<pre>
+			<code>
+<div style="background:#EFEFEF;width:1200px;border:1px solid #CC0000; height:5650px;">
+<ol>
+<li>#include "DxLib.h"</li>
+<li></li>
+<li>// 初期化</li>
+<li>void Initialize_Title(void);	// タイトルの要素の初期化</li>
+<li><font color="red">void Initialize_End(void);	// エンディングの要素の初期化</font></li>
+<li></li>
+<li>// 削除</li>
+<li>void Delete_Title(void);	// タイトルの要素の削除</li>
+<li><font color="red">void Delete_End(void);		// エンディングの要素の削除</font></li>
+<li></li>
+<li>// タイトルの実体</li>
+<li>void Title_Update(void);	// タイトル描画と操作の実体を管理</li>
+<li>void Title_Draw(void);		// タイトルの描画の中身を管理</li>
+<li>void Title_Process(void);	// タイトルの操作の中身を管理</li>
+<li></li>
+<li><font color="red">// エンディングの実体</font></li>
+<li><font color="red">void End_Update(void);		// エンディングの描画と操作の実体を管理</font></li>
+<li><font color="red">void End_Draw(void);		// エンディングの描画の中身を管理</font></li>
+<li><font color="red">void End_Process(void);		// エンディングの操作の中身を管理</font></li>
+<li></li>
+<li>// タイトル要素</li>
+<li>// 描画</li>
+<li>int gr_title_back;	// 背景</li>
+<li>int gr_title_cursor;	// カーソル絵</li>
+<li>int gr_title_start;	// 始めるアイコン画像</li>
+<li>int gr_title_end;	// 終わるアイコン画像</li>
+<li>// 操作</li>
+<li>int title_cursor_y;	// カーソル動作</li>
+<li></li>
+<li><font color="red">// シーン</font></li>
+<li><font color="red">int scene;</font></li>
+<li></li>
+<li>// 終了</li>
+<li>bool endflag;</li>
+<li></li>
+<li>int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)</li>
+<li>{</li>
+<li>        ChangeWindowMode(TRUE);				// ウィンドウモード変更</li>
+<li>        DxLib_Init();						// 初期化</li>
+<li>        SetDrawScreen( DX_SCREEN_BACK ); 	// 裏画面設定</li>
+<li></li>
+<li><font color="red">	scene = 0;</font></li>
+<li>	endflag = false;</li>
+<li></li>
+<li>	Initialize_Title();		// タイトルの初期化の呼び出し</li>
+<li><font color="red">	Initialize_End();		// エンディングの初期化の呼び出し</font></li>
+<li></li>
+<li>        while( ScreenFlip()==0 && ProcessMessage()==0 && ClearDrawScreen()==0 && CheckHitKey(KEY_INPUT_ESCAPE)==0 && endflag == false)</li>
+<li>        {</li>
+<li><font color="red">		if(scene == 0)</font></li>
+<li><font color="red">		{</font></li>
+<li>			Title_Update();		// タイトル</li>
+<li><font color="red">		}</font></li>
+<li><font color="red">		else if(scene == 1)</font></li>
+<li><font color="red">		{</font></li>
+<li><font color="red">			End_Update();		// エンディング</font></li>
+<li><font color="red">		}</font></li>
+<li>        }</li>
+<li></li>
+<li>	Delete_Title();			// タイトルの削除</li>
+<li><font color="red">	Delete_End();			// エンディングの削除</font></li>
+<li></li>
+<li>        DxLib_End(); // DXライブラリ終了処理</li>
+<li>        return 0;</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの初期化</li>
+<li>void Initialize_Title()</li>
+<li>{</li>
+<li>	// 描画</li>
+<li>	gr_title_back = LoadGraph("media\\title_background.png");</li>
+<li>	gr_title_cursor = LoadGraph("media\\title_cursor.png");</li>
+<li>	gr_title_start = LoadGraph("media\\title_start.png");</li>
+<li>	gr_title_end = LoadGraph("media\\title_end.png");</li>
+<li></li>
+<li>	title_cursor_y = 0;</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの削除</li>
+<li>void Delete_Title()</li>
+<li>{</li>
+<li>	DeleteGraph(gr_title_back);</li>
+<li>	DeleteGraph(gr_title_cursor);</li>
+<li>	DeleteGraph(gr_title_start);</li>
+<li>	DeleteGraph(gr_title_end);</li>
+<li>}</li>
+<li></li>
+<li>// タイトルのすべて</li>
+<li>void Title_Update()</li>
+<li>{</li>
+<li>	Title_Draw();</li>
+<li>	Title_Process();</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの描画</li>
+<li>void Title_Draw()</li>
+<li>{</li>
+<li>	DrawGraph(0, 0, gr_title_back, false);</li>
+<li>	DrawGraph(240, 300 + (50 * title_cursor_y), gr_title_cursor, true);</li>
+<li>	DrawGraph(290, 300, gr_title_start, true);</li>
+<li>	DrawGraph(290, 350, gr_title_end, true);</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの操作</li>
+<li>void Title_Process()</li>
+<li>{</li>
+<li>	if(CheckHitKey(KEY_INPUT_UP) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y != 0)</li>
+<li>		{</li>
+<li>			title_cursor_y++;</li>
+<li>		}</li>
+<li>	}</li>
+<li>	if(CheckHitKey(KEY_INPUT_DOWN) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y != 1)</li>
+<li>		{</li>
+<li>			title_cursor_y--;</li>
+<li>		}</li>
+<li>	}</li>
+<li></li>
+<li>	if(CheckHitKey(KEY_INPUT_Z) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y == 0)</li>
+<li>		{</li>
+<li>			</li>
+<li>		}</li>
+<li>		else if(title_cursor_y == 1)</li>
+<li>		{</li>
+<li>			endflag = true;</li>
+<li>		}</li>
+<li>	}</li>
+<li>}</li>
+<li></li>
+<li><font color="red">// エンディングの初期化</font></li>
+<li><font color="red">void Initialize_End()</font></li>
+<li><font color="red">{</font></li>
+<li></li>
+<li><font color="red">}</font></li>
+<li></li>
+<li><font color="red">// エンディングの削除</font></li>
+<li><font color="red">void Delete_End()</font></li>
+<li><font color="red">{</font></li>
+<li></li>
+<li><font color="red">}</font></li>
+<li></li>
+<li><font color="red">// エンディングのすべて</font></li>
+<li><font color="red">void End_Update()</font></li>
+<li><font color="red">{</font></li>
+<li><font color="red">	End_Draw();</font></li>
+<li><font color="red">	End_Process();</font></li>
+<li><font color="red">}</font></li>
+<li></li>
+<li><font color="red">// エンディングの描画</font></li>
+<li><font color="red">void End_Draw()</font></li>
+<li><font color="red">{</font></li>
+<li></li>
+<li><font color="red">}</font></li>
+<li></li>
+<li><font color="red">// エンディングの操作</font></li>
+<li><font color="red">void End_Process()</font></li>
+<li><font color="red">{</font></li>
+<li></li>
+<li><font color="red">}</font></li>
+</ol>
+</div>
+			</code>
+			</pre>
+			<br>
+			&emsp;今回は前のタイトルの関数に加えて<font color="red">【scene】</font>という変数を追加しました。これは名前の通りシーンを切り替えるものです。<br>
+			今は特に切り替えを実装してませんが今後必要になります。ただ今させても何もないエンディングに移るだけなのでさせてません。<br>
+			<br>
+			次で画像が追加されるので実装させます。といっても簡単な感じにしますけどね。どこかのタイミングで言ったかもしれませんがちゃんとしたシークエンス処理は違う場所で細かくやります。<br>
+			<br><br><br><br>
+		</p>
+
+		<h4>
+			<a name="R4-2">
+				No.4-2 画像と操作と切り替え
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;エンディングに必要な画像と操作の実装をします。簡単なものとします。<br>
+			<br>
+			&emsp;エンディングでの操作はタイトルへ戻る操作のみとします。これを行うことでクリアしても何度もプレイできるようにします。<br>
+			先ほどの<font color="red">【scene】</font>がそれなので特に変数の追加などはありません。<br>
+			<br>
+			基本的にエンディングではこのような動作のみとします。人によってはクリアした後にタイトルへ戻るとおまけモードが追加されてるとかいう処理をしてもいいと思います。<br>
+			<br><br>
+			&emsp;次にエンディングの画像に関することですが、背景だけでいいです。クリアーといった感じの画像のみとします。<br>
+			<br>
+			なので今回は特に特別な変数や関数などはないのですぐにソースコードを出します。<br>
+<br>
+			<pre>
+			<code>
+<div style="background:#EFEFEF;width:1200px;border:1px solid #CC0000; height:5900px;">
+<ol>
+<li>#include "DxLib.h"</li>
+<li></li>
+<li>// 初期化</li>
+<li>void Initialize_Title(void);	// タイトルの要素の初期化</li>
+<li>void Initialize_End(void);	// エンディングの要素の初期化</li>
+<li></li>
+<li>// 削除</li>
+<li>void Delete_Title(void);	// タイトルの要素の削除</li>
+<li>void Delete_End(void);		// エンディングの要素の削除</li>
+<li></li>
+<li>// タイトルの実体</li>
+<li>void Title_Update(void);	// タイトル描画と操作の実体を管理</li>
+<li>void Title_Draw(void);		// タイトルの描画の中身を管理</li>
+<li>void Title_Process(void);	// タイトルの操作の中身を管理</li>
+<li></li>
+<li>// エンディングの実体</li>
+<li>void End_Update(void);		// エンディングの描画と操作の実体を管理</li>
+<li>void End_Draw(void);		// エンディングの描画の中身を管理</li>
+<li>void End_Process(void);		// エンディングの操作の中身を管理</li>
+<li></li>
+<li>// タイトル要素</li>
+<li>// 描画</li>
+<li>int gr_title_back;	// 背景</li>
+<li>int gr_title_cursor;	// カーソル絵</li>
+<li>int gr_title_start;	// 始めるアイコン画像</li>
+<li>int gr_title_end;	// 終わるアイコン画像</li>
+<li>// 操作</li>
+<li>int title_cursor_y;	// カーソル動作</li>
+<li></li>
+<li><font color="red">// エンディング要素</font></li>
+<li><font color="red">// 描画</font></li>
+<li><font color="red">int gr_end_back;	// 背景</font></li>
+<li></li>
+<li>// シーン</li>
+<li>int scene;</li>
+<li></li>
+<li>// 終了</li>
+<li>bool endflag;</li>
+<li></li>
+<li>int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)</li>
+<li>{</li>
+<li>        ChangeWindowMode(TRUE);				// ウィンドウモード変更</li>
+<li>        DxLib_Init();						// 初期化</li>
+<li>        SetDrawScreen( DX_SCREEN_BACK ); 	// 裏画面設定</li>
+<li></li>
+<li>	scene = 0;</li>
+<li>	endflag = false;</li>
+<li></li>
+<li>	Initialize_Title();		// タイトルの初期化の呼び出し</li>
+<li>	Initialize_End();		// エンディングの初期化の呼び出し</li>
+<li></li>
+<li>        while( ScreenFlip()==0 && ProcessMessage()==0 && ClearDrawScreen()==0 && CheckHitKey(KEY_INPUT_ESCAPE)==0 && endflag == false)</li>
+<li>        {</li>
+<li>		if(scene == 0)</li>
+<li>		{</li>
+<li>			Title_Update();		// タイトル</li>
+<li>		}</li>
+<li>		else if(scene == 1)</li>
+<li>		{</li>
+<li>			End_Update();		// エンディング</li>
+<li>		}</li>
+<li>        }</li>
+<li></li>
+<li>	Delete_Title();			// タイトルの削除</li>
+<li>	Delete_End();			// エンディングの削除</li>
+<li></li>
+<li>        DxLib_End(); // DXライブラリ終了処理</li>
+<li>        return 0;</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの初期化</li>
+<li>void Initialize_Title()</li>
+<li>{</li>
+<li>	// 描画</li>
+<li>	gr_title_back = LoadGraph("media\\title_background.png");</li>
+<li>	gr_title_cursor = LoadGraph("media\\title_cursor.png");</li>
+<li>	gr_title_start = LoadGraph("media\\title_start.png");</li>
+<li>	gr_title_end = LoadGraph("media\\title_end.png");</li>
+<li></li>
+<li>	title_cursor_y = 0;</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの削除</li>
+<li>void Delete_Title()</li>
+<li>{</li>
+<li>	DeleteGraph(gr_title_back);</li>
+<li>	DeleteGraph(gr_title_cursor);</li>
+<li>	DeleteGraph(gr_title_start);</li>
+<li>	DeleteGraph(gr_title_end);</li>
+<li>}</li>
+<li></li>
+<li>// タイトルのすべて</li>
+<li>void Title_Update()</li>
+<li>{</li>
+<li>	Title_Draw();</li>
+<li>	Title_Process();</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの描画</li>
+<li>void Title_Draw()</li>
+<li>{</li>
+<li>	DrawGraph(0, 0, gr_title_back, false);</li>
+<li>	DrawGraph(240, 300 + (50 * title_cursor_y), gr_title_cursor, true);</li>
+<li>	DrawGraph(290, 300, gr_title_start, true);</li>
+<li>	DrawGraph(290, 350, gr_title_end, true);</li>
+<li>}</li>
+<li></li>
+<li>// タイトルの操作</li>
+<li>void Title_Process()</li>
+<li>{</li>
+<li>	if(CheckHitKey(KEY_INPUT_UP) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y != 0)</li>
+<li>		{</li>
+<li>			title_cursor_y++;</li>
+<li>		}</li>
+<li>	}</li>
+<li>	if(CheckHitKey(KEY_INPUT_DOWN) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y != 1)</li>
+<li>		{</li>
+<li>			title_cursor_y--;</li>
+<li>		}</li>
+<li>	}</li>
+<li></li>
+<li>	if(CheckHitKey(KEY_INPUT_Z) == 1)</li>
+<li>	{</li>
+<li>		if(title_cursor_y == 0)</li>
+<li>		{</li>
+<li><font color="red">			scene = 1;</font></li>
+<li>		}</li>
+<li>		else if(title_cursor_y == 1)</li>
+<li>		{</li>
+<li>			endflag = true;</li>
+<li>		}</li>
+<li>	}</li>
+<li>}</li>
+<li></li>
+<li>// エンディングの初期化</li>
+<li>void Initialize_End()</li>
+<li>{</li>
+<li><font color="red">	// 描画</font></li>
+<li><font color="red">	gr_end_back = LoadGraph("media\\end_background.png");</font></li>
+<li>}</li>
+<li></li>
+<li>// エンディングの削除</li>
+<li>void Delete_End()</li>
+<li>{</li>
+<li><font color="red">	DeleteGraph(gr_end_back);</font></li>
+<li>}</li>
+<li></li>
+<li>// エンディングのすべて</li>
+<li>void End_Update()</li>
+<li>{</li>
+<li>	End_Draw();</li>
+<li>	End_Process();</li>
+<li>}</li>
+<li></li>
+<li>// エンディングの描画</li>
+<li>void End_Draw()</li>
+<li>{</li>
+<li><font color="red">	DrawGraph(0, 0, gr_end_back, false);</font></li>
+<li>}</li>
+<li></li>
+<li>// エンディングの操作</li>
+<li>void End_Process()</li>
+<li>{</li>
+<li><font color="red">	if(CheckHitKey(KEY_INPUT_Z) == 1)</font></li>
+<li><font color="red">	{</font></li>
+<li><font color="red">		scene = 0;</font></li>
+<li><font color="red">	}</font></li>
+<li>}</li>
+</ol>
+</div>
+			</code>
+			</pre>
+			<br>
+			&emsp;変更した赤字を見ればわかると思いますが、タイトルのほうも少し変更しました。というのもシーンをエンディングとタイトルを行き来できるように少し弄りました。<br>
+			今はZキーの入力でシーンが簡単に切り替わるようにしています。<br>
+			<br>
+			ほかには特に説明はないと思うので次へ行きます。ですが、長くなったので次のページへ移ります。<br>
+			<br>
+			<br>
+			<a href="C言語初めてのゲーム(走り抜けジャンプ)-part3.html">C言語初めてのゲーム(走り抜けジャンプ)-part3</a><br>
+			<br><br><br><br>
+
+				Copyright (C) 2002-2009 Xiph.org Foundation
+
+			Redistribution and use in source and binary forms, with or without
+			modification, are permitted provided that the following conditions
+			are met:
+
+			- Redistributions of source code must retain the above copyright
+			notice, this list of conditions and the following disclaimer.
+
+			- Redistributions in binary form must reproduce the above copyright
+			notice, this list of conditions and the following disclaimer in the
+			documentation and/or other materials provided with the distribution.
+
+			- Neither the name of the Xiph.org Foundation nor the names of its
+			contributors may be used to endorse or promote products derived from
+			this software without specific prior written permission.
+
+			THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+			``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+			LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+			A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FOUNDATION
+			OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+			SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+			LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+			DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+			THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+			(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+	
+			libpng Copyright (C) 2004, 2006-2012 Glenn Randers-Pehrson.
+			zlib Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler.
+
+	
+			DX Library Copyright (C) 2001-2014 Takumi Yamada.
+		</p>
+	</BODY>
+</HTML>

@@ -1,0 +1,212 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			C言語初めてのゲーム(走る抜けジャンプ)-part4
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
+		<div align="center"><font size="7">C言語初めてのゲーム(走り抜けジャンプ)-part4</font></div>
+	
+		<h2>
+			対象
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;前回の<font color="red">C言語初めてのゲーム(走る抜けジャンプ)-part3</font>を終えている人が対象となっています。終えてない人は以下のリンクから飛んでやってください。<br>
+			<a href="C言語初めてのゲーム(走り抜けジャンプ)-part3.html">C言語初めてのゲーム(走り抜けジャンプ)-part3</a><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			構成
+			<hr color="#99baff">
+		</h2>
+		<p>
+			<ol>
+				&emsp;<a href="#R5-3">No.5-3 制限させたジャンプ<br></a>
+				&emsp;<a href="#R5-4">No.5-4 敵の移動<br></a>
+				&emsp;<a href="#R5-5">No.5-5 当たり判定<br></a>
+				&emsp;<a href="#R5-6">No.5-6 背景スクロール<br></a>
+			</ol><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			本編
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;今回は前回の続きからゲームの本編を作り、ゲームの完成を目指します。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h1>
+			謝罪
+			<hr color="#99baff">
+		</h1>
+		<p>
+			&emsp;本編の前に謝罪申し上げます。<br>
+			<br>
+			&emsp;えー、私なんですが、このページを書き始めていたころはとてもとてもやる気に満ち満ちていました。<br>
+			ですが、ゲームを作る説明をしているということはゲームを作る人でもありました。<br>
+			<br>
+			&emsp;すみません、忙しくて数か月時間を空けていざやろうと思いましたが、<br><br>
+			あら、やだ・・・HTMLつっら<br><br>
+			と、いうことなので。打ち切り！は悲しいので考え方とアルゴリズムと言えるのか怪しいアルゴリズムだけを残して終わろうと思います。<br>
+			やる気が出るかあるいは後任の人に委ねます。<br>
+			<br><br><br><br><br>
+		</p>
+		<h3>
+			<a name="R5">
+				No.5 ゲーム本編
+			</a>
+			<hr color="#99baff">
+		</h3>
+
+		<h4>
+			<a name="R5-3">
+				No.5-3 制限させたジャンプ
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;今回はキャラクターの動作を作ります。キャラクターはジャンプのみです。なのでジャンプを作ります。<br>
+			<br>
+			制限させたジャンプとありますが考え方では特に意味はありません。このゲームを簡単に作るうえではそうしようとしていただけです。<br>
+			<br><br>
+			&emsp;ジャンプの考え方は基本的に今の自分と同じようなものです。ただ常に重量を受けているのではなく必要なときのみ受けるようにしています。<br>
+			また、重力の大きさも9.8ではなく場合によっては小さくしたり大きくしたりします。ふわっとしたゲームなら小さいですしジャンプ力のないゲームなら大きくするのもありです。<br>
+			<br><br>
+			考え方ですが、必要な要素から言うと、重力とジャンプ力と飛んだ瞬間のジャンプ力です。<br>
+			<br>
+			キャラクターがジャンプのコマンドを押したら飛んだ瞬間のジャンプ力をキャラクターに作用させます。<br>
+			それとほぼ同時にジャンプ力の数値を。また、重力を加算減算させていきます。<br>
+			重力よりジャンプ力が勝ってしまうとぶっ飛びますので基本的にはジャンプ力のほうが小さいです。<br>
+			その二つが同時に行われることで  飛んだ瞬間のジャンプ力＋ジャンプ力==重力  となり重力が勝り下に降りていきます。<br>
+			<br><br>
+			あとプログラムで書く上では飛んだ瞬間のジャンプ力など不要です。ジャンプ力に一括させれば楽です。<br>
+			もっと細かく言うと長くなるのでおおよそといったところで終わります。
+			<br><br><br>
+			例えばこんな感じです。<br>
+			<video src="jump.mp4"></video> <br>
+			動画が貼り付けてなければファイルから直接見てください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h4>
+			<a name="R5-4">
+				No.5-4 敵の移動
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;今回は敵の動作を作ります。敵はキャラクターに突っ込んでくる動きのみなのでそれを作ります。<br>
+			<br><br>
+			このゲームの敵の移動は全然難しくないです。移動してくるだけなので。<br>
+			<br>
+			例えば画面を横640縦480の環境で作っており、敵の画像サイズが横64縦100とするなら、敵の動き始めのX座標は 640となり、動き終わりは -64になります。。<br>
+			<br>
+			あとはそれっぽい移動速度でX座標を減算していくだけです。以上です。はい<br>
+			<br>
+			ループさせたければ-64になった瞬間640に戻して行えばいいし、少し時間を置きたければ-64になった瞬間 int waitcount; 的なものを入れればいいと思います。<br>
+			増やしたければ構造体配列にすれば処理が楽でかつ簡単に増やせると思います。<br>
+			<img src="敵移動.png" alt="敵移動">
+			<br><br><br><br><br>
+		</p>
+
+		<h4>
+			<a name="R5-5">
+				No.5-5 当たり判定
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;前回で敵の動きを作りましたがゲームとしては成り立ちません。なのでキャラクターとの当たり判定を作ります。<br>
+			<br>
+			当たり判定は深く掘り下げると大変なことになるので一番簡単なやり方で行います。<br>
+			<br>
+			敵と自分に対して４面で行います。<br>
+			<br>
+			以上です。<br>
+			一番簡単な説明のつもりが長くなってしまって収集つかなかったので端折ります。当たり判定は自分でどうにかなるよね。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h4>
+			<a name="R5-6">
+				No.5-6 背景スクロール
+			</a>
+			<hr color="#99baff">
+		</h4>
+		<p>
+			&emsp;前回までで一応ゲームとして遊べますが一味欲しいところです。なので背景をスクロールさせて全体的に動きを演出します。<br>
+			<br>
+			今回は一番楽な方法です。<br>
+			二枚の絵を交互に行うやり方です。<br>
+			あと違うかもしれませんが、一枚の絵を二つの変数にロードしないといけないかもしれません。もしかしたらクリッピングが悪さするかもしれません。<br>
+			<br>
+			言葉じゃわかりにくいので図で示そうと思ったのですがそれも難しかったので言葉にします。<br>
+			<br><br>
+			例えば画面サイズが横640だとします。<br>
+			二枚の絵のうち一枚のY座標の初期化を 0にします。もう一枚は 640にします。<br>
+			それで移動速度とともにY座標を両方とも減算します。<br>
+			そうしたら一枚の絵の数値が -640に近づくと思います。そうしたらその絵の数値を640に変えてください。<br>
+			二枚目の絵も同様になると思うので同じような処理を続け繰り返してください。<br>
+			これはキャラクターが右に動いてる動作ですが逆なら逆にすれば問題ないです。背景がつながらないのは絵次第です。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			最後に
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;これで今回は終わります。<br>
+			<br>
+			&emsp;まとめを書こうと思いましたがいまいち思いつきませんでした。<br>
+			説明が拙い部分が多くあったかもしれませんがなんとか理解していただければ幸いです。<br>
+			<br>
+			簡単なゲームを作ってきました。正直、ゲームを作るうえでの重要なことなどを重視して作ったので無駄な処理などがあるかもしれませんがご了承ください。恐らく私のページをもとにほかの人が修正してくださっていると思います。<br>
+			<br><br><br>
+			というのが以前の私の記述でしたが、どうでしたでしょうか。端折りすぎましたし、もはや言葉だけで終えていました。すみません。ありがとうございました。<br>
+			<br><br><br><br><br>
+
+				Copyright (C) 2002-2009 Xiph.org Foundation
+
+			Redistribution and use in source and binary forms, with or without
+			modification, are permitted provided that the following conditions
+			are met:
+
+			- Redistributions of source code must retain the above copyright
+			notice, this list of conditions and the following disclaimer.
+
+			- Redistributions in binary form must reproduce the above copyright
+			notice, this list of conditions and the following disclaimer in the
+			documentation and/or other materials provided with the distribution.
+
+			- Neither the name of the Xiph.org Foundation nor the names of its
+			contributors may be used to endorse or promote products derived from
+			this software without specific prior written permission.
+
+			THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+			``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+			LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+			A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FOUNDATION
+			OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+			SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+			LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+			DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+			THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+			(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+	
+			libpng Copyright (C) 2004, 2006-2012 Glenn Randers-Pehrson.
+			zlib Copyright (C) 1995-2012 Jean-loup Gailly and Mark Adler.
+
+	
+			DX Library Copyright (C) 2001-2014 Takumi Yamada.
+			
+		</p>
+	</BODY>
+</HTML>
