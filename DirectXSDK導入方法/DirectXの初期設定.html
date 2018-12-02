@@ -1,19 +1,23 @@
 <HTML>
 	<HEAD>
 		<TITLE>
-			DirectXのプロジェクト設定方法
+			DirectXSDKのプロジェクト設定方法
 		</TITLE>
 	</HEAD>
 	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
-		<div align="center"><font size="7">DirectXのプロジェクト設定方法</font></div>
+		<div align="center"><font size="7">DirectXSDKのプロジェクト設定方法</font></div>
 	
+
+		<p>
+			※最終更新日：18/12/02
+		</p>
+
 		<h2>
 			対象
 			<hr color="#99baff">
 		</h2>
 		<p>
-			&emsp;C言語を学び終えてC++も学び終えてかつゲームを作成してなおゲーム会社へ行きたい人もしくは技術の高い向上を<br>
-			望んでいる人が対象となります。<br>
+			&emsp;C言語を学び終えてC++も学び終えてDirectXの初歩を学びたい人のための環境構築講座です。<br>
 			Visual Studio 2015または2017を使用しての説明となります。<br>
 			<br><br><br><br><br>
 		</p>
@@ -33,9 +37,8 @@
 		</h2>
 		<p>
 			<ol>
-				<a href="#R1">No.1 DX9を扱うためのDirectX SDKのダウンロード<br></a>
-				<a href="#R2">No.2 DX10以降を扱うためのWindows Kitのダウンロード<br></a>
-				<a href="#R3">No.3 プロジェクトの設定<br></a>
+				<a href="#R1">No.1 DX9または古い勉強サンプルで扱うためのDirectX SDKのダウンロード<br></a>
+				<a href="#R2">No.2 プロジェクトの設定<br></a>
 			</ol><br>
 			<br><br><br><br><br>
 		</p>
@@ -51,7 +54,7 @@
 
 		<h3>
 			<a name="R1">
-				No.1 DX9を扱うためのDirectX SDKのダウンロード
+				No.1 DX9または古い勉強サンプルで扱うためのDirectX SDKのダウンロード
 			</a>
 			<hr color="#99baff">
 		</h3>
@@ -90,65 +93,18 @@
 			<br><br><br><br><br>
 		</p>
 
-		<h3>
-			<a name="R2">
-				No.2 DX10以降を扱うためのWindows Kitのダウンロード
-			</a>
-			<hr color="#99baff">
-		</h3>
-		<p>
-			&emsp;Widnows Kitのダウンロードの説明をしますが、パソコンによっては既に入ってる場合があるのでまず確認してください。<br>
-			<br>
-			<img src="19.jpg" alt="既存のWindows Kitの確認"><br>
-			<br>
-			&emsp;上の画像のような場所に移動してください。<br>
-			<font color="red">C→Program Files(x86)→Windows Kit→10→Include→</font>へ移ってください。<br>
-			<br>
-			&emsp;人によって違うと思いますがその中にあるフォルダの名前を確認してください。<br>
-			その中で一番バージョンが新しいものを覚えといてください。<br>
-			画像の場合は<font color="red">「10.0.16299.0」</font>です。<br><br>
-			&emsp;以下のURLから移動してください。<br>
-			<br>
-			&emsp;<a href="https://developer.microsoft.com/ja-jp/windows/downloads/windows-10-sdk">Windows 10 SDK - Windows アプリ開発</a><br>
-			<br>
-			&emsp;というサイトへ移動してください。以下のようなサイトへ移ると思います。<br>
-			違うようなサイトもしくはサイトがなかった場合は「Widnows SDK」と検索してください。<br>
-			<br>
-			<img src="20.jpg" alt="Download"><br>
-			<br>
-			&emsp;画像の赤の部分の数字を見てください。<br>
-			そしたら先ほどのディレクトリで覚えてくださいといった数字があると思いますがそれと比較してください。<br>
-			それでサイトのほうが新しいバージョンだった場合は下をそのまま進めてください。<br>
-			もし、サイトと同じ数字だった場合は<a href="#R3">No.3 プロジェクトの設定<br></a>へ飛んでください。<br>
-			<br><br>
-			サイトの方が新しいバージョンだった場合の説明を始めます。<br>
-			<img src="16.jpg" alt="Windows 10 SDK - Windows アプリ開発"><br>
-			<br>
-			&emsp;そのサイトにある「.EXEをダウンロードする」を押して始めてください。以下は画像で説明します。<br>
-			<br>
-			<img src="17.jpg" alt="Download"><br>
-			<br>
-			<img src="18.jpg" alt="exeを起動"><br>
-			<br><br><br>
-			&emsp;ダウンロード済みなのでここからの細かい説明を出来ませんが次へなどあればそのまま言われた通り進んでください。<br>
-			<br><br>
-			ダウンロードが終わりましたら先ほどと同じディレクトリへ移って最新バージョンが入っていることを確認してください。それでダウンロードは終了です。<br>
-			<br>
-			<br>
-			&emsp;これでダウンロードは終了です。<br>
-			<br><br><br><br><br>
-		</p>
+		
 
 		<h3>
-			<a name="R3">
-				No.3 プロジェクトの設定
+			<a name="R2">
+				No.2 プロジェクトの設定
 			</a>
 			<hr color="#99baff">
 		</h3>
 		<p>
 			&emsp;以下のサイトで勉強してください。私も最初はこのページからDirectXを始めましたし最初としてはいいサイトだと思います。<br><br>
 			&emsp;<a href="http://k3tec.net/neko_wiki/index.php?DirectX%B9%D6%BA%C20%B2%F3">DirectX講座0回 - K3 計算技術研究会</a><br><br>
-			&emsp;ですがバージョンや環境の古さが相まって大変なことになると思いましたのでNo.1またNo.2としてダウンロードを設けました。<br>
+			&emsp;ですがバージョンや環境の古さが相まって大変なことになると思いましたのでダウンロードを設けました。<br>
 			DxLib同様DirectXにもプロジェクトの設定がいりますのでそれだけでも説明しようと思います。<br>
 			ですが、上のリンクのページでそれらを学ぶのはありです。<br>
 			また、先に話しますとこのサイトではDirectX SDKの導入の説明しかしておらずWindows SDKの説明はしていません。なぜ、私は導入をさせたか。なぜ、このサイトでは一切触れていないか。
@@ -161,19 +117,11 @@
 			<br><br>
 			<img src="10.jpg" alt="x64へ変更"><br>
 			<br>
-			<img src="11.jpg" alt="プロパティの表示とバージョン確認"><br>
-			<br>
 			<img src="12.jpg" alt="VC++ディレクトリの設定前確認"><br>
-			<br>
-			<img src="13.jpg" alt="インクルードディレクトリのWindows Kitの設定"><br>
 			<br>
 			<img src="14.jpg" alt="インクルードディレクトリのDirectX SDKの設定"><br>
 			<br>
 			<img src="15.jpg" alt="インクルードディレクトリの設定後"><br>
-			<br>
-			<img src="21.jpg" alt="ライブラリディレクトリのWindows Kitのucrtの設定"><br>
-			<br>
-			<img src="22.jpg" alt="ライブラリディレクトリのWindows Kitのumの設定"><br>
 			<br>
 			<img src="23.jpg" alt="ライブラリディレクトリのDirectXSDKの設定"><br>
 			<br>
@@ -184,6 +132,7 @@
 			&emsp;それで設定がうまくいってるのかを確認するために以下のコードをひとまずコピペでテストしてください。<br>
 			今は特に勉強してない段階、ただの設定の段階なので中身は無視しますがこの設定を終えたら中身の意味を全部理解してもらいます。<br>
 			<br><br><br><br>
+			FireFoxを想定して記述したのでコードがはみ出る場合はhtmlから直接コピペしてください。
 		</p>
 		<div style="background:#EFEFEF;width:1200px;border:1px solid #CC0000; height:2500px;">
 		<pre>
@@ -309,53 +258,6 @@
 			<br>
 			<br>
 			&emsp;以上で今回の説明は以上となります。<br>
-			<br><br><br><br>
-			<font color="red">※補足１</font><br>
-			&emsp;めんどくさいことをさせてしまった結果、困ったことに陥れやすい可能性があると思うので補足をします。<br>
-			<br>
-			<img src="25.jpg" alt="例えばd3d9.hの設定"><br>
-			<br>
-			例えば、「d3d9.h」をインクルードさせようとすると上の画像のように二つ出てしまうと思います。理由としてはWindows KitとDirectX SDKを設定したためです。
-			ですが、Windows KitのほうではDirectX9を標準搭載していません。なので上のように二つ出てしまった場合はそれがどっちの「d3d9.h」なのかを確認してから
-			インクルードしてください。それで上記のサイトで学ぶためDirectX9を扱う場合は「DirectX SDK」のほうでインクルードさせてください。お兄さんとの約束だぞ。<br>
-			<br><br>
-			<font color="red">※補足２</font><br>
-			&emsp;確か「No.3 プロジェクトの設定」でのちに説明するといった話があったと思います。それを説明および補足します。<br>
-			<br>
-			&emsp;まずDirectX SDKについて説明します。<br>
-			&emsp;みなさんに最初に導入させた「DirectX SDK」があると思いますが、あれはもう更新もされなければ扱っている人はほぼいません。
-			それについてまず説明すると、DirectX SDKはWindows SDKに統合されました。それに伴ってDirectX SDKは本来必要ありません。<br>
-			&emsp;ですが、みなさんに導入させた理由としては「DirectX9」を使って勉強してもらうためです。
-			では、統合された「Windows SDK」のみで「DirectX9」が扱えるとまず疑問に思うはずですがそれにもお答えします。<br>
-			&emsp;みなさんが使っているパソコンのOSはWindows10だと思います。単刀直入に言いますと、その「Windows10」ではDirectX9のゲーム及びソフトは起動できません。
-			では、逆に起動してるのはなぜかと思いますが、それはDirectX9のためのランタイムライブラリを入れているパソコンだからです。標準では入っていないのが現状です。
-			実際、ゲーム会社に送ったゲームがDirectX9で作られていたため起動できずひと手間必要となり減点された例があると聞きます。<br>
-			&emsp;ここまででわかると思いますが、そんな環境の中で「Windows SDK」にはDirectX9で開発するためのものは入っていません。ただそれだと補足１が嘘をついてるとなるので細かく言うと
-			DirectX9をサポートするものはWindows SDKに入っています。ただそれだけで完璧に作れません。加えて言うとWindows Vistaが終わっている今、DirectX10もそのうち消えます。<br>
-			&emsp;じゃあ！なんでDirectX9をやらせんだよ！！って思うと思いますが補足４で説明します。<br>
-			<br><br>
-			<font color="red">※補足３</font><br>
-			&emsp;次にWindows SDKについて説明します。<br>
-			&emsp;これを導入する際にみなさんにディレクトリを確認させてバージョンを見てもらいました。<br>
-			&emsp;Windows Kitはみなさんのパソコンに何かしらのバージョンが入っていたと思います。<br>
-			なぜ入ってたかと申し上げるとVisual Studioを導入した際にWindows Kitが入れられています。C/C++に関する項目を入れた際に入れられているはずです。<br>
-			ですがバージョンが低い可能性もあったので上の項目でWindows SDKの導入をさせました。<br>
-			&emsp;それでWindows SDKを入れさせてバージョンを最新にさせた理由ですが、個々人でDirectXの11/12を勉強する際にすぐとっかかれるようにと配慮しました。
-			つまり今回DirectX9を勉強してそれで終わりでいい人にとっては不必要なことをさせました。<br>
-			<br><br>
-			<font color="red">※補足４</font><br>
-			&emsp;先に指定したページではDirectX9を使った2Dのゲームを作ってもらいます。<br>
-			<br>
-			&emsp;加えて今回使うDirectXはDirectX9です。2017年現在ではDirectX11が市場で出ています。開発としてはDirectX12を扱える状態です。<br>
-			ですが、初めてDirectXを使う人にとってはDirectX9以降だと困惑することや初期化の内容がDirectX9を学ぶより多いのでDirectX9で行ってもらいます。<br>
-			これを完璧にしたらDirectXに強くなります。完璧というのはやってる処理の内容を全部把握して関数や構造体の意味を理解するという意味です。いや、もっとそれ以上かもしれないですが。<br>
-			<br><br>
-			あと本当に補足すると指定したサイトが一番DirectXを始めて勉強するのに適していると感じたからです。私もDirectXはそこ出身です。<br><br>
-			<br><br>
-			ただここまで説明しても納得いかず独自で勉強しようと思う人がいるかもしれませんが別にそれでもかまいません。特にお助けできませんが。<br>
-			いや、でも実際いろいろな場でDirectXを勉強することに関してバージョンのことで討論はよくなされています。DX9から始めるのかDX11から始めるのかなど。
-			なので一概には言えないのが現状です。ただ、私はDX9から勉強始めるのを強く勧めます。<br>
-			<br><br><br><br>
 		</p>
 	</BODY>
 </HTML>
