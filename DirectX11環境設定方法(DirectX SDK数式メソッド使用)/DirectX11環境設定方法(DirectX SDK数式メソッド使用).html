@@ -1,0 +1,634 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			DirectX11環境設定方法(DirectX SDK数式メソッド使用)
+		</TITLE>
+	</HEAD>
+	<BODY bgcolor="#b8d4ef" topmargin="50" leftmargin="50" marginheight="40" marginwidth="40">
+		<div align="center"><font size="7">DirectX11環境設定方法(DirectX SDK数式メソッド使用)</font></div>
+	
+
+		<p>
+			※最終更新：19/07　FireFoxで開いてくれよな！
+		</p>
+
+		<h2>
+			対象
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;プログラムをある程度理解し、Visual Studio 2019の使い方をある程度理解している人が対象です。<br>
+			理由としては、説明がそこらへん理解している前提で端折ってるからです。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			目的
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;自己満。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			構成
+			<hr color="#99baff">
+		</h2>
+		<p>
+			<ol>
+				<a href="#R1">No.1 DirectX SDKのダウンロード<br></a>
+				<a href="#R2">No.2 プロジェクトの作成からDirectX SDKの設定<br></a>
+				<a href="#R3">No.3 必要プロジェクトファイルの作成と設定<br></a>
+				<a href="#R4">No.4 最低限コード記述と各々の説明<br></a>
+			</ol><br>
+			<br><br><br><br><br>
+		</p>
+
+		<h2>
+			本編
+			<hr color="#99baff">
+		</h2>
+		<p>
+			&emsp;画像無しで行くぜ！読めよ！日本人だろ！日本語読めるよな！<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R1">
+				No.1 DirectX SDKのダウンロード
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;ブラウザにて[DirectX SDK]と検索して[Microsoft]のサイトからダウンロードしてください。<br>
+			<br><br><br><br><br>
+		</p>		
+
+		<h3>
+			<a name="R2">
+				No.2 プロジェクトの作成からDirectX SDKの設定
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			<h4>プロジェクトの作成と補足</h4>
+			&emsp;Visual Studio 2019にてプロジェクトを作成してください。<br>
+			作成しましたらこれにてDirectX11とDirectX12の環境設定は終了です。本当です。<br><br>
+			&emsp;ですが、わざわざDirectX SDKを入れさせました。<br>この理由は単純で、あなた方が購読するであろう参考書類はDirectX SDKを使う前提で行っているからです。<br>
+			参考書類に合わせてDirectX SDKを入れる理由も単純で、DirectXで行列計算などを取り扱うメソッドがDirectX SDKからWindows Kitsへ移行する際にすべて作り替えられたからです。<br><br>
+			&emsp;まぁ、その点で言えばDirectXは全部のバージョンでウィンドウ作成のための下準備のための構造体は全部作り直されています。<br>
+			そういう意味では、DirectX12が一番作りやすくなってます。そこら辺について少しだけでも見たい人は以下のURLで見てみてください。<br>
+			<a href="https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/important-changes-from-directx-11-to-directx-12">DirectX3D 11とDirectX3D 12の間の重要な変更点</a><br><br>
+			&emsp;ちなみに、今回はDirectX 12を説明しませんが以下のURL先から簡単なものが作成できます。<br>
+			私はDirectX 12の参考書籍などをまだ購読していないのでわかりませんが、もしかしたらそちらの方ではDirectX SDKは不要になっているかもしれません。<br>
+			<a href="https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/creating-a-basic-direct3d-12-component">Direct3D 12 の基本的なコンポーネントの作成</a><br>
+			<br><br><br>
+			<h4>DirectX SDKの設定</h4>
+			&emsp;<strong>全ての構成</strong>の状態で、<strong>C/C++の全般</strong>にて、<strong>追加のインクルードディレクトリ</strong>にDirectX SDKの<strong>include</strong>を設定してください。<br>
+			&emsp;同様に、<strong>全ての構成</strong>の状態で、<strong>リンカーの全般</strong>にて、<strong>追加のライブラリディレクトリ</strong>にDirectX SDKの<strong>Libの適応プラットフォーム</strong>を設定してください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R3">
+					No.3 必要プロジェクトファイルの作成と設定
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;main.cppをいつものように作成してください。<br>
+			次に<strong>新しい項目の追加</strong>から<strong>HTML</strong>を選択して<strong>ピクセルシェーダと頂点シェーダ</strong>を追加してください。ファイル名はややこしくなるのでそのままにしといてください。<br><br>
+			&emsp;それでファイルの作成は終了ですが、頂点シェーダとピクセルシェーダはファイルのコンパイル設定を変更します。<br>
+			これをやらないやり方（main.cppの一部を変更）もありますが、覚えてもらいたいので行います。<br><br>
+			&emsp;<strong>リソースファイル</strong>の<strong>PixelShader.hlslとVertexShader.hlsl</strong>を右クリックして<Strong>プロパティ</Strong>を選択します。<br>
+			そうしたら<strong>HLSLコンパイラ</strong>の<strong>全般</strong>をクリックして<strong>シェーダモデル</strong>を<strong>Shader Model 5.0(/5_0)</strong>にしてOKを押して閉じてください。<br>
+			<br><br><br><br><br>
+		</p>
+
+		<h3>
+			<a name="R4">
+					No.4 最低限コード記述と各々の説明
+			</a>
+			<hr color="#99baff">
+		</h3>
+		<p>
+			&emsp;頂点シェーダとピクセルシェーダの中にはすでにコードが書かれていると思いますがそのままで構いません。<br>
+			それが一番シンプルなものです。<br><br>
+			&emsp;ではmain.cppを記述します。<br><br>
+			補足ですが、コードを書く以上命名規則など私の基準があるので一応説明しときます。<br><br>
+			私は、メンバ変数に対しては、<strong>m_name</strong>のようにします。<br>
+			また、メンバ変数には、小文字から始まり途中で必要になり次第大文字を使います。（<strong>m_playerName</strong>）<br><br>
+			メンバ変数に限らず、関数に対しては大文字開始です。（<strong>Draw()</strong>）<br><br>
+			関数の引数に対しては、<strong>t_name</strong>のようにします。<br><br>
+			ローカル変数に対しては、メンバ変数の<strong>m_</strong>が無いただの変数名です。<br><br>
+			STLの変数に対しては、例えばvectorであれば<strong>v_map</strong>のように頭文字を使うようにしています。<br><br>
+			ポインタ変数に関しては、<strong>p_hp</strong>のようにします。<br><br>
+			列挙型クラスに関しては、<strong>E</strong>MEMBERのようにします。<br><br>
+			構造体に関しては、<strong>S</strong>MEMBERのようにします。<br><br>
+			おおよそこんな感じです。<br>
+			まぁ以下のコードはあるページを後程添付するURLを参考にしているので100%私のコードではないです。<br><br><br>
+		</P>
+
+		<hr>
+		<p><br>
+			&emsp;まず、DirectX11のためのインクルードを行います。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+#pragma comment(lib,"d3d11.lib")
+#pragma comment(lib,"d3dx11.lib")
+#pragma comment(lib,"d3dCompiler.lib")
+#include <d3dx11.h>
+#include <d3dCompiler.h>
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;次にマクロと定数を設定します。基本的に開放を行ったら中身を初期化させたいのでマクロを使います。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:400px;">
+			<pre>
+// 安全に解放する
+#define SAFE_RELEASE(x) if(x){x->Release(); x=nullptr;}
+/*
+ちなみにマクロはこの書き方でも行けます。
+#define SAFE_RELEASE(x) \
+{ \
+	x->Release(); \
+	x = nullptr; \
+}
+*/
+					
+// 定数定義
+const int WINDOW_WIDTH = 320;	// ウィンドウ幅
+const int WINDOW_HEIGHT = 240;	// ウィンドウ高さ
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;今回はクラスを使わない形で行うため基本的に主要な構造体変数をグローバル変数として扱います。<br>
+			では、その変数を定義します。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:300px;">
+			<pre>
+// グローバル変数
+HWND m_hWnd = nullptr;
+ID3D11Device* m_device = nullptr;		// デバイス
+ID3D11DeviceContext* m_deviceContext = nullptr;		// デバイスコンテキスト
+IDXGISwapChain* m_swapChain = nullptr;     // スワップチェイン
+ID3D11RenderTargetView* m_renderTargetView = nullptr;		// レンダーターゲットビュー
+ID3D11InputLayout* m_vertexLayout = nullptr;
+ID3D11Buffer* m_vertexBuffer = nullptr;
+					
+ID3D11VertexShader* m_vertexShader = nullptr;		// 頂点シェーダー
+ID3D11PixelShader* m_pixelShader = nullptr;		// ピクセルシェーダー
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;ポリゴンの頂点を設定するためのクラスと構造体を定義します。<br>
+			DxLibでは既にVECTORがあります。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:400px;">
+			<pre>
+// ベクタークラス
+class VECTOR3
+{
+	private:
+		float m_x;
+		float m_y;
+		float m_z;
+	public:
+		VECTOR3(float t_x, float t_y, float t_z) : m_x(t_x), m_y(t_y), m_z(t_z) {}
+};
+		
+// 頂点の構造体
+struct SSimpleVertex
+{
+	VECTOR3 pos;  // 位置
+};
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;Direct3Dの初期化を行う関数を定義します。次からこの中について記述します。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+// Direct3Dの初期化関数
+HRESULT InitD3D(HWND hWnd)
+{
+
+}
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;まず、デバイスとスワップチェーン（スワップチェイン）を作成します。<br>
+			これらについて簡単に言えば、デバイスはどういったウィンドウにするかの設定で、スワップチェーンは裏画面とか表画面の話です。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:500px;">
+			<pre>
+	// デバイスとスワップチェーンの作成
+	DXGI_SWAP_CHAIN_DESC sd;
+	ZeroMemory(&sd, sizeof(sd));
+	sd.BufferCount = 1;         // バックバッファの数
+	sd.BufferDesc.Width = WINDOW_WIDTH;     // バッファの幅
+	sd.BufferDesc.Height = WINDOW_HEIGHT;    // バッファの高さ
+	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // バッファのフォーマット
+	sd.BufferDesc.RefreshRate.Numerator = 60;   // リフレッシュレート
+	sd.BufferDesc.RefreshRate.Denominator = 1;
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	sd.OutputWindow = hWnd;
+	sd.SampleDesc.Count = 1;
+	sd.SampleDesc.Quality = 0;
+	sd.Windowed = TRUE;
+			
+	D3D_FEATURE_LEVEL  featureLevel = D3D_FEATURE_LEVEL_11_0;
+		
+	if (FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_REFERENCE, NULL, 0,
+		&featureLevel, 1, D3D11_SDK_VERSION, &sd, &m_swapChain, &m_device, NULL, &m_deviceContext)))
+	{
+		return FALSE;
+	}
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;次にレンダーターゲットを作成します。今回はシングルレンダーターゲットです。<br>
+			簡単に言えば、裏画面から表画面へ直行しないで中間レンダーを作成するために設定するためのものです。<br>
+			それにより出来ることは、例えばブレンド処理とかマスク処理とか、画像に一工夫入れてから描画するもの。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+	// レンダーターゲットビューの作成
+	ID3D11Texture2D* backBuffer;
+	m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)& backBuffer);
+	m_device->CreateRenderTargetView(backBuffer, NULL, &m_renderTargetView);
+	backBuffer->Release();
+	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, NULL);
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;次にビューポートを設定します。<br>
+			簡単に言えば、3D上でカメラがあると思いますが、そのカメラに写っているものをどう扱うかといったものです。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+	// ビューポートの設定
+	D3D11_VIEWPORT vp;
+	vp.Width = WINDOW_WIDTH;
+	vp.Height = WINDOW_HEIGHT;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	m_deviceContext->RSSetViewports(1, &vp);
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;次にシェーダを使うためのコンパイルやエラー処理をする親的存在であるブロブを作成する。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// hlslファイル読み込み
+	ID3DBlob* p_CompiledShader = nullptr;
+	ID3DBlob* p_Errors = nullptr;
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次に頂点シェーダの構築と処理を行う。<br>
+			頂点シェーダは簡単に言えば三角ポリゴンの各頂点をどう処理するかといったもの。<br>
+			今回はただ頂点情報を受け取って何の処理もせず渡すだけの役割をしている。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:600px;">
+			<pre>
+	// ブロブから頂点シェーダー作成
+	if (FAILED(D3DX11CompileFromFile(L"VertexShader.hlsl", NULL, NULL, "main", "vs_5_0", 0, 0, NULL, &p_CompiledShader, &p_Errors, NULL)))
+	{
+		MessageBox(0, L"頂点シェーダー読み込み失敗", NULL, MB_OK);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(p_Errors);
+			
+	if (FAILED(m_device->CreateVertexShader(p_CompiledShader->GetBufferPointer(), p_CompiledShader->GetBufferSize(), NULL, &m_vertexShader)))
+	{
+		SAFE_RELEASE(p_CompiledShader);
+		MessageBox(0, L"頂点シェーダー作成失敗", NULL, MB_OK);
+		return E_FAIL;
+	}
+	// 頂点インプットレイアウトを定義 
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	UINT numElements = sizeof(layout) / sizeof(layout[0]);
+		
+	// 頂点インプットレイアウトを作成
+	if (FAILED(m_device->CreateInputLayout(layout, numElements, p_CompiledShader->GetBufferPointer(), p_CompiledShader->GetBufferSize(), &m_vertexLayout)))
+		return FALSE;
+	// 頂点インプットレイアウトをセット
+	m_deviceContext->IASetInputLayout(m_vertexLayout);
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次にピクセルシェーダの構築と処理を行う。<br>
+			ピクセルシェーダは簡単に言えば頂点シェーダから渡された情報にそれの色情報を付与するもの。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:300px;">
+			<pre>
+	// ブロブからピクセルシェーダー作成
+	if (FAILED(D3DX11CompileFromFile(L"PixelShader.hlsl", NULL, NULL, "main", "ps_5_0", 0, 0, NULL, &p_CompiledShader, &p_Errors, NULL)))
+	{
+		MessageBox(0, L"ピクセルシェーダー読み込み失敗", NULL, MB_OK);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(p_Errors);
+	if (FAILED(m_device->CreatePixelShader(p_CompiledShader->GetBufferPointer(), p_CompiledShader->GetBufferSize(), NULL, &m_pixelShader)))
+	{
+		SAFE_RELEASE(p_CompiledShader);
+		MessageBox(0, L"ピクセルシェーダー作成失敗", NULL, MB_OK);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(p_CompiledShader);
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;描画する頂点の位置を設定する。<br>
+			3D空間上なのでZ字句を固定で中心からそれぞれ三点に頂点を設定している。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:400px;">
+			<pre>
+	// 三角形
+	SSimpleVertex vertices[] =
+	{
+		VECTOR3(0.0f, 0.5f, 0.5f),
+		VECTOR3(0.5f, -0.5f, 0.5f),
+		VECTOR3(-0.5f, -0.5f, 0.5f),
+	};
+	D3D11_BUFFER_DESC bd;
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(SSimpleVertex) * 3;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = vertices;
+	if (FAILED(m_device->CreateBuffer(&bd, &InitData, &m_vertexBuffer)))
+		return FALSE;
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次にバーテックスバッファーに三つの頂点情報を渡す。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// バーテックスバッファーをセット
+	UINT stride = sizeof(SSimpleVertex);
+	UINT offset = 0;
+	m_deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次に三角形の三つの頂点をどのようにGPUに渡すかプリミティブ・トポロジーにて設定します。<br>
+			ちなみに今の設定は単純で簡単ですがとても非効率です。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// プリミティブ・トポロジーをセット
+	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;ここまでエラー無いので初期化完了～<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	return S_OK;
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;描画を行う関数の中身を記述。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+// レンダリング
+void Render()
+{
+}
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;背景色を設定する。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	float ClearColor[4] = { 0,0,0,1 }; // 消去色
+	m_deviceContext->ClearRenderTargetView(m_renderTargetView, ClearColor);// 画面クリア 
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次に使用する頂点シェーダとピクセルシェーダを設定する。<br>
+			この順番は逆にしちゃダメだし一緒に扱わないとダメ。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// 使用するシェーダーの登録
+	m_deviceContext->VSSetShader(m_vertexShader, NULL, 0);
+	m_deviceContext->PSSetShader(m_pixelShader, NULL, 0); 
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次に頂点情報をGPUに渡して描画する<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// プリミティブをレンダリング
+	m_deviceContext->Draw(3, 0);
+	m_swapChain->Present(0, 0);// フリップ
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;次に裏画面を表画面にして終わり。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	m_swapChain->Present(0, 0);// フリップ
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;構造体変数を軒並み解放<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:300px;">
+			<pre>
+// 終了時解放処理
+void Cleanup()
+{
+	SAFE_RELEASE(m_vertexShader);
+	SAFE_RELEASE(m_pixelShader);
+	SAFE_RELEASE(m_vertexBuffer);
+	SAFE_RELEASE(m_vertexLayout);
+	SAFE_RELEASE(m_swapChain);
+	SAFE_RELEASE(m_renderTargetView);
+	SAFE_RELEASE(m_deviceContext);
+	SAFE_RELEASE(m_device);
+}
+				
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;エラー時のメッセージウィンドウを出力するように関数作成。<br>
+			コールバック関数ともいう。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:300px;">
+			<pre>
+// メッセージプロシージャ
+LRESULT CALLBACK MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_DESTROY://終了時
+		Cleanup();
+	PostQuitMessage(0);
+		break;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+				
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;い つ も の<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+//メイン関数
+INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR szStr, INT iCmdShow)
+{
+}				
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;どういったウィンドウにするかの基本的な部分の設定を行う。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+	// ウインドウクラスの登録
+	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
+					  GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+					  L"Window1", NULL };
+	RegisterClassEx(&wc);			
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;ウィンドウの外郭に関することの設定を行う。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:300px;">
+			<pre>
+	// タイトルバーとウインドウ枠の分を含めてウインドウサイズを設定
+	RECT rect;
+	SetRect(&rect, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+	rect.right = rect.right - rect.left;
+	rect.bottom = rect.bottom - rect.top;
+	rect.top = 0;
+	rect.left = 0;			
+			</pre>
+		</div>
+
+		<p><br>
+			&emsp;ウィンドウの生成の場所や名前を設定して作成。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:200px;">
+			<pre>
+	// ウインドウの生成
+	m_hWnd = CreateWindow(L"Window1", L"三角ポリゴン",
+		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rect.right, rect.bottom,
+		NULL, NULL, wc.hInstance, NULL);			
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;エラーメッセージの初期化をし、Direct3Dの初期化をし、ウィンドウ表示を行い、<br>
+			エラーが起きればエラーメッセージを表示させるようにさせ、エラーが無ければレンダリングをさせる。<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:500px;">
+			<pre>
+	MSG msg;
+	ZeroMemory(&msg, sizeof(msg));
+	// Direct3D初期化
+	if (SUCCEEDED(InitD3D(m_hWnd)))
+	{
+		// ウインドウ表示
+		ShowWindow(m_hWnd, SW_SHOW);
+		UpdateWindow(m_hWnd);
+		while (msg.message != WM_QUIT)
+		{
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			else
+			{
+				Render();
+			}
+		}
+	}			
+			</pre>
+		</div>
+
+		<hr>
+		<p><br>
+			&emsp;はい<br>
+		</p>
+		<div style="background:#EFEFEF;width:1300px;border:1px solid #CC0000; height:100px;">
+			<pre>
+	// 終了
+	return 0;			
+			</pre>
+		</div>
+
+		<p>
+			<br><br><br><br><br>
+			※参考サイト<br>
+			<a href="https://www43.atwiki.jp/directx11/pages/16.html">三角ポリゴンを表示する</a>
+			<br><br><br><br>
+		</p>
+	</BODY>
+</HTML>
